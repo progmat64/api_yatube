@@ -7,7 +7,7 @@ from .serializers import CommentSerializer, GroupSerializer, PostSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().select_related("author")
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated, IsAuthorOrReadOnly]
 
@@ -33,5 +33,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Определение комментариев определенного поста."""
         post_id = self.kwargs.get("post_id")
-        new_queryset = Comment.objects.filter(post_id=post_id)
+        new_queryset = Comment.objects.filter(post_id=post_id).select_related(
+            "author"
+        )
         return new_queryset
