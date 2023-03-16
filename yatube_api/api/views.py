@@ -1,6 +1,5 @@
-from rest_framework import permissions, viewsets
-
 from posts.models import Comment, Group, Post
+from rest_framework import permissions, viewsets
 
 from .permissions import IsAuthorOrReadOnly
 from .serializers import CommentSerializer, GroupSerializer, PostSerializer
