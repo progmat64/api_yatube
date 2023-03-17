@@ -1,12 +1,13 @@
-from posts.models import Comment, Group, Post
 from rest_framework import permissions, viewsets
+
+from posts.models import Comment, Group, Post
 
 from .permissions import IsAuthorOrReadOnly
 from .serializers import CommentSerializer, GroupSerializer, PostSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all().select_related("author")
+    queryset = Post.objects.select_related("author")
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated, IsAuthorOrReadOnly]
 
